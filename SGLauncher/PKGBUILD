@@ -1,0 +1,32 @@
+# Maintainer: ItsZariep <itszariep@disroot.org>
+pkgname=sglauncher-git
+pkgver=r45.7bba032
+pkgrel=1
+pkgdesc="A simple GTK3 application launcher"
+arch=('any')
+url="https://codeberg.org/ItsZariep/SGLauncher"
+license=('GPL')
+depends=('gtk3')
+makedepends=('git' 'gtk3')
+source=("git+$url.git#branch=main")
+sha256sums=('SKIP')
+
+pkgver() {
+cd "$srcdir/SGLauncher"
+echo "r$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
+}
+
+build() {
+cd "$srcdir/SGLauncher"
+make
+}
+
+package() {
+cd "$srcdir/SGLauncher"
+make PREFIX="$pkgdir/usr" install
+}
+
+clean() {
+cd "$srcdir/SGLauncher"
+make clean
+}
